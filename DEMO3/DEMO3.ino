@@ -30,8 +30,7 @@
   A7        Built-In Buttons    btn
 
 **************************************************************************/
-
-
+// Include the servo library and the custom Ping Pong Library
 #include <Servo.h>
 #include "PingPong.h"
 
@@ -69,7 +68,7 @@ void setup() {
   int i;
 
   for (i = 0; i < 6; i++) {
-    while (Serial.available() < 3);
+    while (Serial.available() < 3); // Waits until message is received from Matlab.
     encoderPos[i] = Serial.read();
     xTarget_HB[i] = Serial.read();
     xTarget_LB[i] = Serial.read();
@@ -90,7 +89,6 @@ void setup() {
   digitalWrite(LED, HIGH);
   delay(1000);
   digitalWrite(LED, LOW);
-
 
   for (i = 0; i < 6; i++) {
     launchAngles[i] = Wallace.getLaunchAngle(angleLowerBound, angleUpperBound, xTarget_m[i]);
@@ -119,10 +117,8 @@ void loop() {
     analogWrite(SolenoidPowerPin, 0);
     Wallace.reload(cannonServo, loaderServo, lastState, pos);
   }
-
   Wallace.returnHome(lastState, pos);           // finish game
   digitalWrite(LED, HIGH);
   delay(1000);
   digitalWrite(LED, LOW);
-
 }
